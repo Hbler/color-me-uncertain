@@ -18,6 +18,11 @@
   --border: calc(var(--width) / 2);
 }
 
+/* Extreme */
+#extreme {
+  font-size: 105px;
+}
+
 /* Hexagons Area */
 
 .hexagon {

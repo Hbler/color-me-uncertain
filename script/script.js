@@ -1,25 +1,6 @@
 //// Variables
-
 // Array and Objects
-const hexComps = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "0",
-];
-const colors = [
+const rootVarNames = [
   "colorOne",
   "colorTwo",
   "colorThr",
@@ -60,7 +41,9 @@ const difficulties = {
     "h-ele",
     "h-twe",
   ],
-  extreme: 36,
+  extreme: Array.apply(null, Array(36)).map(function (x, i) {
+    return i;
+  }),
 };
 
 let modes = document.getElementsByName("mode");
@@ -93,35 +76,47 @@ function setGameParams() {
 }
 
 //// Manage colors
+// Randon integer from interval
+function randInt(min, max) {
+  // min and max included
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
 // Generate
 function genColors(mode, amount) {
   const colors = [];
-  const index = [1, 3, 5];
+  const hue = ["red", "green", "blue"];
+  let H, S, L, newColor;
 
   // Generating needed amout of colors
-  while (colors.length < amount) {
-    const newColor = ["#"];
-    for (let i = 1; i <= 6; i++) {
-      const rHex = Math.floor(Math.random() * hexComps.length);
-      newColor.push(hexComps[rHex]);
+  if (mode === "random") {
+    while (colors.length < amount) {
+      H = randInt(0, 360);
+      S = randInt(20, 100);
+      L = randInt(40, 60);
+      newColor = `hsl(${H},${S}%,${L}%)`;
+      colors.push(newColor);
     }
-    colors.push(newColor);
-  }
-
-  //Checking for mode
-  if (mode === "similar") {
-    const rIndex = index[Math.floor(Math.random() * 3)];
-    const mHexA = hexComps[Math.floor(Math.random() * 15)],
-      mHexB = hexComps[Math.floor(Math.random() * 15)];
-    for (let i = 0; i < colors.length; i++) {
-      const c = colors[i];
-      c.splice(rIndex, 2, mHexA, mHexB);
+  } else if (mode === "mono") {
+    const mono = hue[Math.floor(Math.random() * 3)];
+    while (colors.length < amount) {
+      switch (mono) {
+        case "red":
+          H = randInt(0, 100);
+          break;
+        case "green":
+          H = randInt(140, 220);
+          break;
+        case "blue":
+          H = randInt(260, 340);
+      }
+      S = randInt(20, 100);
+      L = randInt(40, 60);
+      newColor = `hsl(${H},${S}%,${L}%)`;
+      colors.push(newColor);
     }
   }
-
-  const generatedColors = colors.map((x) => x.join(""));
-  return generatedColors;
+  return colors;
 }
 
 // Update Variables
@@ -132,19 +127,19 @@ function updateMainColor(arr) {
   root.style.setProperty("--mainColor", `${nextC}`);
 }
 // Hexagons
-function updateRootVar(colArr) {
+function updateRootVar(arr) {
   const root = document.querySelector(":root");
   //   const rStyle = getComputedStyle(root);
-  const cLimit = colors.slice(0, colArr.length);
-  for (let i = 0; i < cLimit.length; i++) {
-    const c = cLimit[i];
-    root.style.setProperty(`--${c}`, `${colArr[i]}`);
+  const varNames = rootVarNames.slice(0, arr.length);
+  for (let i = 0; i < varNames.length; i++) {
+    const v = varNames[i];
+    root.style.setProperty(`--${v}`, `${arr[i]}`);
   }
 }
 
 ////Fill board
 
-function displayColorOptions(dif) {
+function displayColorOptions(dif, arr) {
   const canvas = document.getElementById("color-options");
   const classNames = difficulties[`${dif}`];
   const limit = classNames.length;
@@ -159,19 +154,24 @@ function displayColorOptions(dif) {
     root.style.setProperty("--width", "80px");
   }
 
-  for (let i = 0; i < limit; i++) {
-    const hClass = classNames[i];
-    const outerDiv = document.createElement("div");
-    const hexagon = document.createElement("div");
-    outerDiv.setAttribute("class", "outer");
-    hexagon.setAttribute("class", "hexagon");
-    hexagon.classList.add(`${hClass}`);
-    outerDiv.appendChild(hexagon);
-    canvas.appendChild(outerDiv);
+  if (limit <= 12) {
+    for (let i = 0; i < limit; i++) {
+      const hClass = classNames[i];
+      const outerDiv = document.createElement("div");
+      const hexagon = document.createElement("div");
+      outerDiv.setAttribute("class", "outer");
+      hexagon.setAttribute("class", "hexagon");
+      hexagon.classList.add(`${hClass}`);
+      outerDiv.appendChild(hexagon);
+      canvas.appendChild(outerDiv);
+    }
+  } else {
+    for (let i = 0; i < limit; i++) {
+      const element = document.createElement("p");
+      element.setAttribute("id", "extreme");
+      element.appendChild(document.createTextNode("⧫"));
+      element.style.setProperty("color", `${arr[i]}`);
+      canvas.appendChild(element);
+    }
   }
 }
-
-let test = setGameParams();
-let test1 = difficulties[test[1]];
-
-displayColorOptions(test1);
