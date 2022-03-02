@@ -76,18 +76,19 @@ section {
   font-weight: 700;
 }
 
-.ui #start {
+.ui #start,
+.ui #new {
   border: 1px solid transparent;
   margin: 5%;
   padding: 3%;
   font-family: "Dosis", sans-serif;
-  font-weight: 400;
+  font-weight: 700;
   border-radius: 3px;
 }
 
-.ui #start:hover {
+.ui #start:hover,
+.ui #new:hover {
   border: 1px solid #fff;
-  font-weight: 700;
   cursor: pointer;
   color: #fff;
   background-color: #000;
@@ -102,6 +103,10 @@ section {
   align-items: center;
 }
 
+#main-color p:hover {
+  cursor: default;
+}
+
 #color-options {
   display: flex;
   flex-wrap: wrap;
@@ -111,4 +116,8 @@ section {
 
 .outer {
   margin: 5%;
+}
+
+.clear {
+  display: none;
 }

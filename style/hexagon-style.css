@@ -19,7 +19,7 @@
 }
 
 /* Extreme */
-#extreme {
+.extreme {
   font-size: 105px;
 }
 
@@ -50,6 +50,24 @@
 .hexagon:after {
   top: 100%;
   width: 0;
+}
+
+.hexagon:hover {
+  cursor: pointer;
+}
+
+/* Matched Element */
+
+#matched {
+  background-color: #fff;
+}
+
+#matched:before {
+  border-bottom: calc(var(--margin)) solid transparent;
+}
+
+#matched:after {
+  border-top: calc(var(--margin)) solid transparent;
 }
 
 /* Hexagon One */
