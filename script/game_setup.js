@@ -1,6 +1,6 @@
 //// Listeners
-for (let mode of modes.values()) {
-  document.getElementById(mode.id).addEventListener("click", setGameParams); // Event handler onclick
+for (let m of mode.values()) {
+  document.getElementById(m.id).addEventListener("click", setGameParams); // Event handler onclick
 }
 
 for (let dif of difficulty.values()) {
@@ -11,9 +11,9 @@ document.getElementById("new").addEventListener("click", setupDisplay);
 
 function setGameParams() {
   const gameParams = [];
-  for (let mode of modes.values()) {
-    if (mode.checked) {
-      gameParams.push(mode.value);
+  for (let m of mode.values()) {
+    if (m.checked) {
+      gameParams.push(m.value);
     }
   }
   for (let dif of difficulty.values()) {
@@ -98,9 +98,19 @@ function newGameButton() {
   newGame.classList.toggle("clear");
 }
 
+// Score visibility
+function scoreBoard() {
+  const points = document.getElementById("points");
+  const rounds = document.getElementById("rounds");
+  points.classList.toggle("clear");
+  rounds.classList.toggle("clear");
+}
+
 //Check if board is empty
 function setupDisplay() {
   const board = document.getElementById("color-options");
+  const points = document.getElementById("points");
+  const rounds = document.getElementById("rounds");
   const bClassList = document.getElementById("new").classList;
   const bInvisible = bClassList.contains("clear");
   const isEmpty = board.innerHTML === "";
@@ -110,7 +120,11 @@ function setupDisplay() {
     updateMainColor(["#fff"]);
     if (!bInvisible) {
       newGameButton();
+      scoreBoard();
     }
+  } else {
+    points.innerHTML = "000 <strong>Points</strong>";
+    rounds.innerHTML = "<strong>Round</strong> 01";
   }
 }
 
@@ -171,6 +185,7 @@ function showGame() {
   updateRootVar(colors);
   displayColorOptions(dif, colors);
   newGameButton();
+  scoreBoard();
   paragraph.appendChild(roundColors);
   paragraph.setAttribute("id", "round-colors");
   paragraph.classList.add("clear");

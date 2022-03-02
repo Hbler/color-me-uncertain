@@ -16,6 +16,7 @@
 
 body {
   background-color: #fff;
+  font-family: "Dosis", sans-serif;
 }
 
 header {
@@ -50,6 +51,9 @@ section {
 aside {
   width: 23%;
   padding: 1.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 section {
@@ -59,7 +63,6 @@ section {
 }
 
 .info {
-  font-family: "Dosis", sans-serif;
   margin: 5%;
 }
 
@@ -78,10 +81,10 @@ section {
   padding: 1%;
   background-color: #e0e0e0;
   line-height: 200%;
+  border-radius: 5px;
 }
 
 .ui fieldset {
-  font-family: "Dosis", sans-serif;
   border: none;
   margin: 5%;
 }
@@ -112,9 +115,15 @@ section {
   background-color: #000;
 }
 
+.score {
+  margin: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
 #main-color {
   color: var(--mainColor);
-  font-size: 350px;
+  font-size: 300px;
   width: 30%;
   display: flex;
   justify-content: center;

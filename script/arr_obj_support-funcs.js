@@ -45,7 +45,7 @@ const difficulties = {
   }),
 };
 
-let modes = document.getElementsByName("mode");
+let mode = document.getElementsByName("mode");
 let difficulty = document.getElementsByName("difficulty");
 
 //// Support Functions
