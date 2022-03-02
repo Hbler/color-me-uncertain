@@ -71,6 +71,8 @@ function updatePoints(bool) {
   }
 
   if (cPoints < 10)
+    pointsPara.innerHTML = `00${cPoints} <strong>Points</strong>`;
+  else if (cPoints < 100)
     pointsPara.innerHTML = `0${cPoints} <strong>Points</strong>`;
   else pointsPara.innerHTML = `${cPoints} <strong>Points</strong>`;
 }
