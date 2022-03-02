@@ -303,12 +303,13 @@ function updateGame(arr) {
   const element = document.getElementById(match[2]);
 
   if (matched && colorArr.length !== 1) {
-    colorArr.splice(colorArr.indexOf(color), 1);
+    // console.log(colorArr.indexOf(`${color}`));
+    colorArr.splice(colorArr.indexOf(`${color}`), 1);
     element.id = "matched";
     updateMainColor(colorArr);
     colorPara.innerHTML = colorArr.join("-");
   } else if (colorArr.length === 1) {
-    colorArr.splice(colorArr.indexOf(color), 1);
+    colorArr.splice(colorArr.indexOf(`${color}`), 1);
     element.id = "matched";
     updateMainColor(["#fff"]);
     colorPara.innerHTML = colorArr.join("-");
@@ -336,12 +337,12 @@ function play() {
   const childNodes = board.childNodes;
   const allChildIDs = [];
 
-  for (let i = 0; i < childNodes.length; i++) {
-    allChildIDs.push(childNodes[i].childNodes[0].id);
-  }
+  // for (let i = 0; i < childNodes.length; i++) {
+  //   allChildIDs.push(childNodes[i].childNodes[0].id);
+  // }
 
-  const isMatched = (id) => id === "matched";
-  const allMatched = allChildIDs.every(isMatched);
+  // const isMatched = (id) => id === "matched";
+  // const allMatched = allChildIDs.every(isMatched);
 
   if (clicked === "start") {
     showGame();
