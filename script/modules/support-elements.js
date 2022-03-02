@@ -58,7 +58,7 @@ function randInt(min, max) {
 // RGB to HSL converters
 function rgbToHSL(str) {
   let sep = str.indexOf(",") > -1 ? "," : " ";
-  rgb = str.substr(4).split(")")[0].split(sep);
+  let rgb = str.substr(4).split(")")[0].split(sep);
 
   for (let R in rgb) {
     let r = rgb[R];
@@ -108,3 +108,5 @@ function rgbToHSL(str) {
     "hsl(" + Math.round(h) + "," + Math.round(s) + "%," + Math.round(l) + "%)"
   );
 }
+
+export { rootVarNames, difficulties, mode, difficulty, randInt, rgbToHSL };

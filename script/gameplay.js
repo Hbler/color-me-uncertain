@@ -1,5 +1,31 @@
+import {
+  mode,
+  difficulty,
+  randInt,
+  rgbToHSL,
+  setGameParams,
+  genColors,
+  updateMainColor,
+  updateRootVar,
+  newGameButton,
+  scoreBoard,
+  setupDisplay,
+  displayColorOptions,
+  showGame,
+} from "./modules/game_setup.js";
+
 //// Listeners
+
+for (let m of mode.values()) {
+  document.getElementById(m.id).addEventListener("click", setGameParams); // Event handler onclick
+}
+
+for (let dif of difficulty.values()) {
+  document.getElementById(dif.id).addEventListener("click", setGameParams); // Event handler onclick
+}
+
 document.getElementById("start").addEventListener("click", play);
+document.getElementById("new").addEventListener("click", setupDisplay);
 
 //// Gameplay
 
@@ -113,3 +139,5 @@ function play() {
     else roundsPara.innerHTML = `<strong>Round</strong> ${round}`;
   }
 }
+
+export { play };

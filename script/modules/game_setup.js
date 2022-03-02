@@ -1,13 +1,13 @@
-//// Listeners
-for (let m of mode.values()) {
-  document.getElementById(m.id).addEventListener("click", setGameParams); // Event handler onclick
-}
+import {
+  rootVarNames,
+  difficulties,
+  mode,
+  difficulty,
+  randInt,
+  rgbToHSL,
+} from "./support-elements.js";
 
-for (let dif of difficulty.values()) {
-  document.getElementById(dif.id).addEventListener("click", setGameParams); // Event handler onclick
-}
-
-document.getElementById("new").addEventListener("click", setupDisplay);
+import { play } from "../gameplay.js";
 
 function setGameParams() {
   const gameParams = [];
@@ -194,3 +194,21 @@ function showGame() {
   paragraph.classList.add("clear");
   board.appendChild(paragraph);
 }
+
+export {
+  rootVarNames,
+  difficulties,
+  mode,
+  difficulty,
+  randInt,
+  rgbToHSL,
+  setGameParams,
+  genColors,
+  updateMainColor,
+  updateRootVar,
+  newGameButton,
+  scoreBoard,
+  setupDisplay,
+  displayColorOptions,
+  showGame,
+};
