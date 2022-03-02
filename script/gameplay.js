@@ -13,7 +13,7 @@ function updateGame(arr) {
   const element = document.getElementById(match[2]);
 
   if (matched && colorArr.length !== 1) {
-    // console.log(colorArr.indexOf(`${color}`));
+    console.log(colorArr.indexOf(`${color}`));
     colorArr.splice(colorArr.indexOf(`${color}`), 1);
     element.id = "matched";
     updateMainColor(colorArr);

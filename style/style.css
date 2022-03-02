@@ -15,7 +15,7 @@
 }
 
 body {
-  background-color: #e0e0e0;
+  background-color: #fff;
 }
 
 header {
@@ -39,16 +39,21 @@ main {
   justify-content: space-between;
 }
 
+aside,
+section {
+  background-color: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
 aside {
   width: 23%;
   padding: 1.5%;
-  box-sizing: border-box;
-  background-color: #fff;
 }
 
 section {
   background-color: #fff;
-  box-sizing: border-box;
   width: 75%;
   display: flex;
 }
@@ -60,6 +65,19 @@ section {
 
 .info summary {
   font-weight: 700;
+}
+
+.info .instructions {
+  display: none;
+  position: absolute;
+}
+
+.info details:hover .instructions {
+  display: block;
+  width: 40%;
+  padding: 1%;
+  background-color: #e0e0e0;
+  line-height: 200%;
 }
 
 .ui fieldset {
