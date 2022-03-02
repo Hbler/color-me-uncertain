@@ -77,6 +77,9 @@ function genColors(mode, dif) {
 function updateMainColor(arr) {
   const nextC = arr[Math.floor(Math.random() * arr.length)];
   const root = document.querySelector(":root");
+  const bgC = nextC.split(",");
+  bgC.splice(2, 1, "95%)");
+  root.style.setProperty("--bgColor", `${bgC}`);
   root.style.setProperty("--mainColor", `${nextC}`);
 }
 // Hexagons
