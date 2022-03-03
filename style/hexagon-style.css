@@ -20,7 +20,8 @@
 
 /* Extreme */
 .extreme {
-  font-size: 105px;
+  font-size: 80px;
+  cursor: pointer;
 }
 
 /* Hexagons Area */
@@ -60,6 +61,7 @@
 
 #matched {
   background-color: #fff;
+  color: #fff;
 }
 
 #matched:before {

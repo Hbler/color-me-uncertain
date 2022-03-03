@@ -1,16 +1,11 @@
 import {
   mode,
   difficulty,
-  randInt,
   rgbToHSL,
   setGameParams,
-  genColors,
   updateMainColor,
-  updateRootVar,
-  newGameButton,
-  scoreBoard,
   setupDisplay,
-  displayColorOptions,
+  showExtreme,
   showGame,
 } from "./modules/game_setup.js";
 
@@ -28,14 +23,19 @@ document.getElementById("start").addEventListener("click", play);
 document.getElementById("new").addEventListener("click", setupDisplay);
 
 //// Gameplay
-
 // Check for match
 function checkMatch(id) {
   const clicked = document.getElementById(id);
-  const bColor = getComputedStyle(clicked).getPropertyValue("background-color");
+  let bColor;
+  if (clicked.classList.contains("extreme")) {
+    bColor = getComputedStyle(clicked).getPropertyValue("color");
+  } else {
+    bColor = getComputedStyle(clicked).getPropertyValue("background-color");
+  }
   const main = document.getElementById("main");
   const currentC = getComputedStyle(main).getPropertyValue("color");
   const arr = [currentC === bColor, currentC, id];
+  console.log(arr);
 
   updateGame(arr);
 }
@@ -54,11 +54,13 @@ function updateGame(arr) {
     // console.log(colorArr.indexOf(`${color}`));
     colorArr.splice(colorArr.indexOf(`${color}`), 1);
     element.id = "matched";
+    element.removeAttribute("style");
     updateMainColor(colorArr);
     colorPara.innerHTML = colorArr.join("-");
   } else if (colorArr.length === 1) {
     colorArr.splice(colorArr.indexOf(`${color}`), 1);
     element.id = "matched";
+    element.removeAttribute("style");
     updateMainColor(["#fff"]);
     colorPara.innerHTML = colorArr.join("-");
   }
@@ -67,6 +69,8 @@ function updateGame(arr) {
 
 // Update points
 function updatePoints(bool) {
+  const xtrmClassList = document.getElementById("xtrm").classList;
+  const xInvisible = xtrmClassList.contains("clear");
   const pointsPara = document.getElementById("points");
   const points = pointsPara.innerHTML;
   let cPoints = +points.slice(0, 3);
@@ -75,6 +79,10 @@ function updatePoints(bool) {
     if (dif.checked) {
       cDif += `${dif.value}`;
     }
+  }
+
+  if (cPoints >= 100 && xInvisible) {
+    showExtreme();
   }
 
   switch (cDif) {

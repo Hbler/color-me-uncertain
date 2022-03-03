@@ -109,6 +109,12 @@ function scoreBoard() {
   rounds.classList.toggle("clear");
 }
 
+// Secret dificulties
+function showExtreme() {
+  const extreme = document.getElementById("xtrm");
+  extreme.classList.toggle("clear");
+}
+
 //Check if board is empty
 function setupDisplay() {
   const board = document.getElementById("color-options");
@@ -116,6 +122,8 @@ function setupDisplay() {
   const rounds = document.getElementById("rounds");
   const bClassList = document.getElementById("new").classList;
   const bInvisible = bClassList.contains("clear");
+  const extremeClassList = document.getElementById("xtrm").classList;
+  const xInvisible = extremeClassList.contains("clear");
   const isEmpty = board.innerHTML === "";
 
   if (!isEmpty) {
@@ -124,6 +132,9 @@ function setupDisplay() {
     if (!bInvisible) {
       newGameButton();
       scoreBoard();
+    }
+    if (!xInvisible) {
+      showExtreme();
     }
   } else {
     points.innerHTML = "000 <strong>Points</strong>";
@@ -166,7 +177,7 @@ function displayColorOptions(dif, arr) {
       const element = document.createElement("p");
       element.setAttribute("id", `element-${i}`);
       element.setAttribute("class", "extreme");
-      element.appendChild(document.createTextNode("⧫"));
+      element.appendChild(document.createTextNode("█"));
       element.style.setProperty("color", `${arr[i]}`);
       element.addEventListener("click", play);
       board.appendChild(element);
@@ -208,6 +219,7 @@ export {
   updateRootVar,
   newGameButton,
   scoreBoard,
+  showExtreme,
   setupDisplay,
   displayColorOptions,
   showGame,
