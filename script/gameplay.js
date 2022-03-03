@@ -34,7 +34,7 @@ function checkMatch(id) {
   const main = document.getElementById("main");
   const currentC = getComputedStyle(main).getPropertyValue("color");
   const arr = [currentC === bColor, currentC, id, bColor];
-  console.log(arr);
+
   updateGame(arr);
 }
 
