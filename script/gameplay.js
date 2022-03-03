@@ -1,7 +1,6 @@
 import {
   mode,
   difficulty,
-  rgbToHSL,
   setGameParams,
   updateMainColor,
   setupDisplay,
@@ -34,9 +33,8 @@ function checkMatch(id) {
   }
   const main = document.getElementById("main");
   const currentC = getComputedStyle(main).getPropertyValue("color");
-  const arr = [currentC === bColor, currentC, id];
+  const arr = [currentC === bColor, currentC, id, bColor];
   console.log(arr);
-
   updateGame(arr);
 }
 
@@ -47,11 +45,10 @@ function updateGame(arr) {
   const colorArr = colors.split("-");
   const match = arr;
   const matched = match[0];
-  const color = rgbToHSL(match[1]);
+  const color = match[1];
   const element = document.getElementById(match[2]);
 
   if (matched && colorArr.length !== 1) {
-    // console.log(colorArr.indexOf(`${color}`));
     colorArr.splice(colorArr.indexOf(`${color}`), 1);
     element.id = "matched";
     element.removeAttribute("style");

@@ -5,6 +5,7 @@ import {
   difficulty,
   randInt,
   rgbToHSL,
+  HSLToRGB,
 } from "./support-elements.js";
 
 import { play } from "../gameplay.js";
@@ -77,7 +78,7 @@ function genColors(mode, dif) {
 function updateMainColor(arr) {
   const nextC = arr[Math.floor(Math.random() * arr.length)];
   const root = document.querySelector(":root");
-  const bgC = nextC.split(",");
+  const bgC = rgbToHSL(nextC).split(",");
   bgC.splice(2, 1, "95%)");
   root.style.setProperty("--bgColor", `${bgC}`);
   root.style.setProperty("--mainColor", `${nextC}`);
@@ -192,7 +193,8 @@ function showGame() {
   const params = setGameParams();
   const mode = params[0];
   const dif = params[1];
-  const colors = genColors(mode, dif);
+  const newColors = genColors(mode, dif);
+  const colors = newColors.map((x) => HSLToRGB(`${x}`));
   const roundColors = document.createTextNode(`${colors.join("-")}`);
   setupDisplay();
   updateMainColor(colors);
@@ -212,7 +214,6 @@ export {
   mode,
   difficulty,
   randInt,
-  rgbToHSL,
   setGameParams,
   genColors,
   updateMainColor,
