@@ -1,5 +1,7 @@
 import {
+  showInfo,
   updatePoints,
+  timer,
   roundEnd,
   updateColors,
   prepareBoard,
@@ -8,10 +10,14 @@ import {
 
 //// Global Variables
 const rounds = document.getElementById("rounds");
+let startTime;
 
 //// Listeners
 document.getElementById("start").addEventListener("click", play);
+document.getElementById("next").addEventListener("click", play);
 document.getElementById("new").addEventListener("click", prepareBoard);
+document.getElementById("reset").addEventListener("click", prepareBoard);
+document.getElementById("info").addEventListener("click", showInfo);
 
 //// Gameplay
 /// Check for Match
@@ -29,10 +35,11 @@ function play() {
   const clicked = this.id;
   const nextRound = roundEnd();
   const currentRound = rounds.innerHTML;
-  let cr = currentRound.slice(-3);
+  let cr = +currentRound.slice(-2);
 
-  if (clicked === "start") {
+  if (clicked === "start" || clicked === "next") {
     showGame();
+    startTime = timer();
   } else if (clicked.startsWith("element-")) {
     const match = checkMatched(clicked);
     const bool = match[0];
@@ -48,4 +55,4 @@ function play() {
   }
 }
 
-export { play };
+export { play, startTime };

@@ -1,13 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&family=Gloria+Hallelujah&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Ubuntu:wght@300;700&display=swap");
 
 /* 
-    font-family: 'Dosis', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-family: 'Gloria Hallelujah', cursive;
 */
 
 :root {
   --mainColor: #fff;
   --bgColor: #fff;
+  --uiColor: #000;
   --size: 16px;
 }
 
@@ -18,7 +19,7 @@
 
 body {
   background-color: var(--bgColor);
-  font-family: "Dosis", sans-serif;
+  font-family: "Ubuntu", sans-serif;
 }
 
 header {
@@ -58,8 +59,9 @@ aside {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  color: #f0f0f0;
   border: 2px solid #fff;
-  background-color: #f0f0f0;
+  background-color: var(--uiColor);
 }
 
 section {
@@ -68,26 +70,70 @@ section {
   display: flex;
 }
 
-.info {
-  margin: 5%;
-}
-
-.info summary {
-  font-weight: 700;
-}
-
-.info .instructions {
-  display: none;
+#round-s {
   position: absolute;
+  margin-left: 45%;
+  width: 25vw;
+  box-sizing: border-box;
+  line-height: 200%;
+  align-items: center;
+  font-size: 16px;
+  transform: translateY(15vh);
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
 }
 
-.info details:hover .instructions {
-  display: block;
-  width: 40%;
-  padding: 1%;
-  background-color: #e0e0e0;
-  line-height: 200%;
+#round-s div {
+  display: flex;
+  justify-content: center;
+  width: 80%;
   border-radius: 5px;
+}
+
+#info {
+  margin: 5%;
+  cursor: pointer;
+}
+
+#instructions {
+  width: 20%;
+  padding: 1%;
+  line-height: 200%;
+  border: 2px solid #e0e0e0;
+  border-radius: 1px;
+  position: absolute;
+  transform: translate(50%, -4%);
+  background-color: var(--uiColor);
+  transition: opacity 1s, border-radius 0.5s, transform 1s;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#instructions span {
+  font-weight: 700;
+  color: #fff;
+}
+
+#info ul {
+  list-style: none;
 }
 
 .ui fieldset {
@@ -103,22 +149,33 @@ section {
   font-weight: 700;
 }
 
+#next,
+#reset {
+  border: 1px solid transparent;
+  margin: 5%;
+  padding: 2%;
+  font-family: "Ubuntu", sans-serif;
+  border-radius: 2px;
+  background-color: #fff;
+}
+
 .ui #start,
 .ui #new {
   border: 1px solid transparent;
   margin: 5%;
   padding: 3%;
-  font-family: "Dosis", sans-serif;
-  font-weight: 700;
-  border-radius: 3px;
+  font-family: "Ubuntu", sans-serif;
+  border-radius: 2px;
 }
 
+#next:hover,
+#reset:hover,
 .ui #start:hover,
 .ui #new:hover {
   border: 1px solid #fff;
   cursor: pointer;
   color: #fff;
-  background-color: #000;
+  background-color: var(--uiColor);
 }
 
 .score {

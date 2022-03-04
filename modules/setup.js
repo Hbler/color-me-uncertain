@@ -1,5 +1,6 @@
-import { play } from "../play.js";
-import { diffs, ColorGen, Element } from "./classes.js";
+import { play, startTime } from "../play.js";
+import { diffs, allRoundsObj, registerRound } from "./objects.js";
+import { ColorGen, Element, Round } from "./classes.js";
 
 //// Global variables
 const root = document.querySelector(":root");
@@ -11,7 +12,19 @@ const newGame = document.getElementById("new");
 const nGBCL = newGame.classList;
 const points = document.getElementById("points");
 const rounds = document.getElementById("rounds");
+const rContainer = document.getElementById("round-s");
+const rSummary = document.getElementById("r-summary");
+const rCCL = rContainer.classList;
 const board = document.getElementById("color-options");
+
+let pointsWon = 0;
+let pointsLost = 0;
+
+//// Instructions
+function showInfo() {
+  let instructions = document.getElementById("instructions");
+  instructions.classList.toggle("clear");
+}
 
 //// Context = mode + difficulty
 function gameContext() {
@@ -26,6 +39,11 @@ function gameContext() {
 }
 
 //// Visibility control
+/// Round summary
+function showSummary() {
+  rContainer.classList.toggle("clear");
+}
+
 /// New game button
 function newGameButton() {
   newGame.classList.toggle("clear");
@@ -58,21 +76,30 @@ function updatePoints(bool) {
 
   switch (currentDiff) {
     case "easy":
-      if (bool) currentPoints += diffs.easy.points;
-      else if (!bool && currentPoints >= 2) currentPoints -= diffs.easy.points;
+      if (bool)
+        (currentPoints += diffs.easy.points), (pointsWon += diffs.easy.points);
+      if (!bool && currentPoints >= 2) currentPoints -= diffs.easy.points;
+      if (!bool) pointsLost += diffs.easy.points;
       break;
     case "medium":
-      if (bool) currentPoints += diffs.medium.points;
-      else if (!bool && currentPoints >= 3) cPoints -= diffs.medium.points;
+      if (bool)
+        (currentPoints += diffs.medium.points),
+          (pointsWon += diffs.medium.points);
+      if (!bool && currentPoints >= 3) currentPoints -= diffs.medium.points;
+      if (!bool) pointsLost += diffs.medium.points;
       break;
     case "hard":
-      if (bool) currentPoints += diffs.hard.points;
-      else if (!bool && currentPoints >= 4) currentPoints -= diffs.hard.points;
+      if (bool)
+        (currentPoints += diffs.hard.points), (pointsWon += diffs.hard.points);
+      if (!bool && currentPoints >= 4) currentPoints -= diffs.hard.points;
+      if (!bool) pointsLost += diffs.hard.points;
       break;
     case "extreme":
-      if (bool) currentPoints += diffs.extreme.points;
-      else if (!bool && currentPoints >= 1)
-        currentPoints -= diffs.extreme.points;
+      if (bool)
+        (currentPoints += diffs.extreme.points),
+          (pointsWon += diffs.extreme.points);
+      if (!bool && currentPoints >= 1) currentPoints -= diffs.extreme.points;
+      if (!bool) pointsLost += diffs.extreme.points;
       break;
   }
 
@@ -85,16 +112,58 @@ function updatePoints(bool) {
 }
 
 /// Rounds
+// Track time
+function timer() {
+  const startTime = new Date();
+  return startTime;
+}
+
+//Create round summary
+function roundSummary() {
+  // clear previous summary
+  rSummary.innerHTML = "";
+
+  // calculate time
+  const eTime = new Date() - startTime;
+  console.log(eTime);
+
+  const currentRound = rounds.innerHTML;
+  let cr = +currentRound.slice(-2);
+  const cp = points.innerHTML;
+  let tPoints = +cp.slice(0, 3);
+  const thisRound = new Round(cr, tPoints, pointsWon, pointsLost, eTime);
+  const summary = thisRound.summary;
+
+  console.log(thisRound);
+
+  for (let i = 0; i < summary.length; i++) {
+    const para = document.createElement("p");
+    para.appendChild(document.createTextNode(summary[i]));
+    rSummary.appendChild(para);
+  }
+
+  if (roundEnd()) {
+    const sRInvisible = rCCL.contains("clear");
+    if (sRInvisible) showSummary();
+    registerRound(cr, thisRound);
+
+    pointsWon = 0;
+    pointsLost = 0;
+  }
+}
+
+// Check if round ended
 function roundEnd() {
   const children = board.childNodes;
   const childrenIDs = [];
 
   for (let i = 0; i < children.length - 2; i++) {
-    childrenIDs.push(children[i].childNodes[0].id);
+    childrenIDs.push(children[i].id);
   }
 
   const matched = (id) => id === "matched";
   const allMatched = childrenIDs.filter(matched).length;
+  console.log(children.length - 2 === allMatched);
   return children.length - 2 === allMatched;
 }
 
@@ -107,19 +176,18 @@ function updateColors(bool, str, id) {
   const rgbColors = rgb.innerHTML;
   const hslArr = hslColors.split("-");
   const rgbArr = rgbColors.split("-");
-  console.log(rgbArr, hslArr);
 
   if (bool && rgbArr.length !== 1) {
-    rgbArr.splice(rgbArr.indexOf(str), 1);
     hslArr.splice(rgbArr.indexOf(str), 1);
+    rgbArr.splice(rgbArr.indexOf(str), 1);
     element.id = "matched";
     element.removeAttribute("style");
     updateMainColor(hslArr, rgbArr);
     rgb.innerHTML = rgbArr.join("-");
     hsl.innerHTML = hslArr.join("-");
   } else if (rgbArr.length === 1) {
-    rgbArr.splice(rgbArr.indexOf(str), 1);
     hslArr.splice(rgbArr.indexOf(str), 1);
+    rgbArr.splice(rgbArr.indexOf(str), 1);
     element.id = "matched";
     element.removeAttribute("style");
     updateMainColor(["hsl(0,0%,100%)"], ["rgb(255,255,255)"]);
@@ -134,6 +202,7 @@ function prepareBoard() {
   const bIsEmpty = board.innerHTML === "";
   const eIvsbl = eCL.contains("clear");
   const nGBInvisible = nGBCL.contains("clear");
+  const sRInvisible = rCCL.contains("clear");
   if (!bIsEmpty) {
     board.innerHTML = "";
     updateMainColor(["hsl(0,0%,100%)"], ["rgb(255,255,255)"]);
@@ -141,9 +210,8 @@ function prepareBoard() {
       newGameButton();
       scoreBoard();
     }
-    if (!eIvsbl) {
-      showExtreme();
-    }
+    if (!eIvsbl) showExtreme();
+    if (!sRInvisible) showSummary();
   } else {
     points.innerHTML = "000 <strong>Points</strong>";
     rounds.innerHTML = "<strong>Round</strong> 01";
@@ -154,9 +222,13 @@ function prepareBoard() {
 function updateMainColor(hsl, rgb) {
   const nextColor = rgb[Math.floor(Math.random() * rgb.length)];
   const nextBG = hsl[rgb.indexOf(nextColor)].split(",");
-  nextBG[2] === "100%)" ? {} : nextBG.splice(2, 1, "95%)");
-  root.style.setProperty("--bgColor", `${nextBG}`);
+  nextBG[2] === "100%)" ? {} : nextBG.splice(2, 1, "90%)");
+  const bodyBG = nextBG.join(",");
+  root.style.setProperty("--bgColor", `${bodyBG}`);
   root.style.setProperty("--mainColor", `${nextColor}`);
+  const nextUi = bodyBG.split(",");
+  nextUi.splice(2, 1, "25%)");
+  root.style.setProperty("--uiColor", `${nextUi}`);
 }
 
 /// Board filler
@@ -170,7 +242,7 @@ function displayElements(arr1, arr2, str) {
       root.style.setProperty("--size", "130px");
       break;
     case "hard":
-      root.style.setProperty("--size", "100px");
+      root.style.setProperty("--size", "105px");
       break;
     case "extreme":
       root.style.setProperty("--size", "70px");
@@ -179,7 +251,7 @@ function displayElements(arr1, arr2, str) {
 
   // Sends elements to board
   for (let i = 0; i < diffs[str].elements; i++) {
-    const nE = new Element(`element-${i}`, arr1[i], arr2[i]);
+    const nE = new Element(`element-${i}`, arr1[i], arr2[i], str);
     const para = document.createElement("p");
     const hiddenCode = document.createElement("span");
 
@@ -191,10 +263,9 @@ function displayElements(arr1, arr2, str) {
     para.appendChild(document.createTextNode(nE.icon));
     para.appendChild(hiddenCode);
     para.addEventListener("click", play);
+    para.addEventListener("click", roundSummary);
     board.appendChild(para);
   }
-
-  // add color list to the board
 }
 
 /// Combine everything
@@ -223,4 +294,12 @@ function showGame() {
   board.appendChild(rgbColors);
 }
 
-export { updatePoints, roundEnd, updateColors, prepareBoard, showGame };
+export {
+  showInfo,
+  updatePoints,
+  timer,
+  roundEnd,
+  updateColors,
+  prepareBoard,
+  showGame,
+};

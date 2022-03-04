@@ -11,19 +11,6 @@ class Difficulty {
   }
 }
 
-const difficulties = [
-  ["easy", 2, 6],
-  ["medium", 3, 8],
-  ["hard", 4, 12],
-  ["extreme", 1, 36],
-];
-
-// class instances
-let diffs = {};
-for (const d of difficulties) {
-  diffs[`${d[0]}`] = new Difficulty(`${d[0]}`, d[1], d[2]);
-}
-
 class ColorGen {
   mode;
   diff;
@@ -93,16 +80,69 @@ class Element {
   id;
   hsl;
   rgb;
-  icons = ["▀", "▄", "█"];
-  constructor(id, hsl, rgb) {
+  diff;
+  icons = ["▀", "▄", "█", "◼", "▮", "▪"];
+  constructor(id, hsl, rgb, diff) {
     this.id = id;
     this.hsl = hsl;
     this.rgb = rgb;
+    this.diff = diff;
   }
 
   get icon() {
-    return this.icons[Math.floor(Math.random() * this.icons.length)];
+    switch (this.diff) {
+      case "easy":
+        const easy = randInt(0, 5);
+        return this.icons[easy];
+      case "medium":
+        const medium = randInt(0, 4);
+        return this.icons[medium];
+      case "hard":
+        const hard = randInt(0, 3);
+        return this.icons[hard];
+      case "extreme":
+        const extreme = randInt(0, 2);
+        return this.icons[extreme];
+    }
   }
 }
 
-export { diffs, ColorGen, Element };
+class Round {
+  round;
+  tPoints;
+  pointsWon;
+  pointsLost;
+  eTime;
+  constructor(round, tPoints, pointsWon, pointsLost, eTime) {
+    this.round = round;
+    this.tPoints = tPoints;
+    this.pointsWon = pointsWon;
+    this.pointsLost = pointsLost;
+    this.eTime = eTime;
+  }
+
+  get summary() {
+    const time = this.convertTime();
+    return [
+      `End of Round 0${this.round}`,
+      `Current Score: ${this.tPoints} Points`,
+      `Points Won: ${this.pointsWon}`,
+      `Points Lost: ${this.pointsLost}`,
+      `You took ${time} to finish it.`,
+    ];
+  }
+
+  // Methods
+  convertTime() {
+    const time = this.eTime;
+
+    switch (time) {
+      case time > 60000:
+        return `${(time / 60000).toFixed(2)} minutes`;
+      default:
+        return `${(time / 1000).toFixed(2)} seconds`;
+    }
+  }
+}
+
+export { Difficulty, ColorGen, Element, Round };
