@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300;700&family=Gloria+Hallelujah&display=swap");
+
+/* 
+    font-family: 'Dosis', sans-serif;
+    font-family: 'Gloria Hallelujah', cursive;
+*/
+
+:root {
+  --mainColor: #fff;
+  --bgColor: #fff;
+  --size: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bgColor);
+  font-family: "Dosis", sans-serif;
+}
+
+header {
+  height: 10vh;
+  padding: 3%;
+  color: #fff;
+  font-size: 36px;
+  font-family: "Gloria Hallelujah", cursive;
+  font-weight: 400;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header span {
+  color: var(--bgColor);
+}
+
+main {
+  padding: 3%;
+  height: 65vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+aside,
+section {
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+aside {
+  width: 23%;
+  padding: 1.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  border: 2px solid #fff;
+  background-color: #f0f0f0;
+}
+
+section {
+  background-color: transparent;
+  width: 75%;
+  display: flex;
+}
+
+.info {
+  margin: 5%;
+}
+
+.info summary {
+  font-weight: 700;
+}
+
+.info .instructions {
+  display: none;
+  position: absolute;
+}
+
+.info details:hover .instructions {
+  display: block;
+  width: 40%;
+  padding: 1%;
+  background-color: #e0e0e0;
+  line-height: 200%;
+  border-radius: 5px;
+}
+
+.ui fieldset {
+  border: none;
+  margin: 5%;
+}
+
+.ui fieldset div {
+  margin: 5%;
+}
+
+.ui legend {
+  font-weight: 700;
+}
+
+.ui #start,
+.ui #new {
+  border: 1px solid transparent;
+  margin: 5%;
+  padding: 3%;
+  font-family: "Dosis", sans-serif;
+  font-weight: 700;
+  border-radius: 3px;
+}
+
+.ui #start:hover,
+.ui #new:hover {
+  border: 1px solid #fff;
+  cursor: pointer;
+  color: #fff;
+  background-color: #000;
+}
+
+.score {
+  margin: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#main-color {
+  color: var(--mainColor);
+  font-size: 370px;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#main-color p:hover {
+  cursor: default;
+}
+
+#color-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.element {
+  cursor: pointer;
+  font-size: var(--size);
+  margin: 1%;
+}
+
+#matched {
+  color: transparent;
+}
+
+.clear {
+  display: none;
+}

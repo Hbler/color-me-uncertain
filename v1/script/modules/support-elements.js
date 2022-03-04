@@ -109,7 +109,7 @@ function rgbToHSL(str) {
   );
 }
 
-// HSL to RGB converter
+// HSL to RGB converter - from CSS-Tricks
 function HSLToRGB(str) {
   let sep = str.indexOf(",") > -1 ? "," : " ";
   let hsl = str.substr(4).split(")")[0].split(sep);
@@ -169,3 +169,40 @@ export {
 
 ("hsl(316,24%,44%)-hsl(349,44%,50%)-hsl(210,51%,56%)-hsl(58,27%,40%)-hsl(297,33%,57%)-hsl(344,63%,50%)");
 ("rgb(139,85,125)");
+
+// HSL to RGB converter - from http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c (found on StackOverflow)
+function HSLToRGB2(str) {
+  let sep = str.indexOf(",") > -1 ? "," : " ";
+  let hsl = str.substr(4).split(")")[0].split(sep);
+  let r, g, b;
+
+  let h = hsl[0] / 100,
+    s = hsl[1].substr(0, hsl[1].length - 1) / 100,
+    l = hsl[2].substr(0, hsl[2].length - 1) / 100;
+
+  const hue2rgb = function hue2rgb(p, q, t) {
+    if (t < 0) t += 1;
+    if (t > 1) t -= 1;
+    if (t < 1 / 6) return p + (q - p) * 6 * t;
+    if (t < 1 / 2) return q;
+    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+    return p;
+  };
+
+  let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+  let p = 2 * l - q;
+
+  r = Math.min(Math.floor(hue2rgb(p, q, h + 1.0 / 3.0) * 256), 255);
+  g = Math.min(Math.floor(hue2rgb(p, q, h) * 256), 255);
+  b = Math.min(Math.floor(hue2rgb(p, q, h - 1.0 / 3.0) * 256), 255);
+
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+function HSLToRGB3(h, s, l) {
+  ///StackOverflow
+  let a = s * Math.min(l, 1 - l);
+  let f = (n, k = (n + h / 30) % 12) =>
+    l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+  return [f(0), f(8), f(4)];
+}

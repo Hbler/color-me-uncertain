@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style/style.css">
+    <title>Color Me Uncertain</title>
+  </head>
+  <body>
+    <header>
+      <h1>Color me... <span>Uncertain</span></h1>
+    </header>
+    <main>
+      <aside>
+        <div class="info">
+          <details>
+            <summary>Instructions</summary>
+            <div class="instructions">
+              <p>
+                <strong>Choose the color mode:</strong> random (aleatory colors) or monochromatic
+                (similar colors); </p>
+                <p>
+                  <strong>Choose the difficulty:</strong> easy (6 tiles),
+                  medium (8 tiles), hard (12 tiles)...
+                </p> <p>
+                  And finally <strong>start a game
+                  </strong> and find, among the tiles on the board, the color that
+                  matches the main one!
+                </p>
+              </p>
+            </div>
+          </details>
+        </div>
+        <div class="ui">
+          <fieldset>
+            <legend>Color Mode</legend>
+            <div>
+              <input
+                type="radio"
+                name="mode"
+                id="random"
+                value="random"
+                
+              />
+              <label for="random">Random</label>
+            </div>
+            <div>
+              <input type="radio" name="mode" id="mono" value="mono" checked/>
+              <label for="mono">Monochromatic</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Choose difficulty</legend>
+            <div>
+              <input
+                type="radio"
+                name="difficulty"
+                id="easy"
+                value="easy"
+                checked
+              />
+              <label for="easy">Easy</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="difficulty"
+                id="medium"
+                value="medium"
+              />
+              <label for="medium">Medium</label>
+            </div>
+            <div>
+              <input type="radio" name="difficulty" id="hard" value="hard" />
+              <label for="hard">Hard</label>
+            </div>
+            <div id="xtrm" class="clear">
+              <input type="radio" name="difficulty" id="extreme" value="extreme" />
+              <label for="extreme">Extreme</label>
+            </div>
+          </fieldset>
+          <button id="start">Start Game</button>
+          <button id="new" class="clear">New Game</button>
+        </div>
+        <div class="score">
+          <p class="clear" id="points"></p>
+          <p class="clear" id="rounds"></p>
+        </div>
+      </aside>
+      <section id="game">
+        <div id="main-color">
+          <p id="main">&#10072;</p>
+        </div>
+        <div id="color-options"></div>
+      </section>
+    </main>
+    <script type="module" src="./play.js"></script>
+  </body>
+</html>
