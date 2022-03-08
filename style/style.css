@@ -214,6 +214,16 @@ section {
   color: transparent;
 }
 
+footer {
+  width: 21%;
+  padding: 1%;
+  text-align: right;
+}
+
+footer h4 a {
+  color: #000;
+}
+
 .clear {
   display: none;
 }
