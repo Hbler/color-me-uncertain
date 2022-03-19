@@ -163,7 +163,6 @@ function roundEnd() {
 
   const matched = (id) => id === "matched";
   const allMatched = childrenIDs.filter(matched).length;
-  console.log(children.length - 2 === allMatched);
   return children.length - 2 === allMatched;
 }
 

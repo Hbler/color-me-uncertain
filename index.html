@@ -11,6 +11,18 @@
     <header>
       <h1>Color me... <span>Uncertain</span></h1>
     </header>
+    <section id="lang">
+      <fieldset>
+        <div>
+          <input type="radio" name="lang" id="pt-br" value="pt-br">
+          <label for="pt-br">PT-BR</label>
+        </div>
+        <div>
+          <input type="radio" name="lang" id="en" value="en" checked>
+          <label for="en">EN</label>
+        </div>
+      </fieldset>
+    </section>
     <main>
       <aside id="round-s" class="clear">
         <h3>Round Summary:</h3>
@@ -95,8 +107,10 @@
               <label for="extreme">Extreme</label>
             </div>
           </fieldset>
-          <button id="start">Start Game</button>
-          <button id="new" class="clear">New Game</button>
+          <div>
+            <button id="start">Start Game</button>
+            <button id="new" class="clear">New Game</button>
+          </div>
         </div>
         <div class="score">
           <p class="clear" id="points"></p>
@@ -105,7 +119,7 @@
       </aside>
       <section id="game">
         <div id="main-color">
-          <p id="main">&#10072;</p>
+          <p id="main"></p>
         </div>
         <div id="color-options"></div>
       </section>
