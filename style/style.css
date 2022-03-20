@@ -251,7 +251,7 @@ footer h4 a {
   display: none;
 }
 
-@media screen and (min-width: 300px) and (max-width: 579px) {
+@media screen and (min-width: 300px) and (max-width: 859px) {
   /* HEADER */
   header {
     height: fit-content;
