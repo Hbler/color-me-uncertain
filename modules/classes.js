@@ -132,15 +132,26 @@ class Round {
     ];
   }
 
+  get resumo() {
+    const time = this.convertTime();
+    return [
+      `Fim do round 0${this.round}`,
+      `Pontuação atual: ${this.tPoints} Pontos`,
+      `Pontos ganhos: ${this.pointsWon}`,
+      `Pontos perdidos: ${this.pointsLost}`,
+      `Você levou ${time} pra acabar.`,
+    ];
+  }
+
   // Methods
   convertTime() {
     const time = this.eTime;
 
     switch (time) {
       case time > 60000:
-        return `${(time / 60000).toFixed(2)} minutes`;
+        return `${(time / 60000).toFixed(2)} m`;
       default:
-        return `${(time / 1000).toFixed(2)} seconds`;
+        return `${(time / 1000).toFixed(2)} s`;
     }
   }
 }

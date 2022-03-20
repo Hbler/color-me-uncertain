@@ -16,9 +16,78 @@ const rContainer = document.getElementById("round-s");
 const rSummary = document.getElementById("r-summary");
 const rCCL = rContainer.classList;
 const board = document.getElementById("color-options");
+const lang = document.getElementsByName("lang");
 
+let cLang;
 let pointsWon = 0;
 let pointsLost = 0;
+
+for (let l of lang) {
+  l.addEventListener("click", setLang);
+}
+
+//// User Interface
+function setLang() {
+  const rSummary = document.querySelectorAll("h3")[0];
+  const info = document.querySelectorAll("h2")[0];
+  const instructions = document.getElementById("instructions");
+  const next = document.getElementById("next");
+  const reset = document.getElementById("reset");
+  const legends = document.querySelectorAll("legend");
+  const mode = legends[0];
+  const diff = legends[1];
+  const labels = document.querySelectorAll("label");
+  const random = labels[2];
+  const mono = labels[3];
+  const easy = labels[4];
+  const medium = labels[5];
+  const hard = labels[6];
+  const xtrm = labels[7];
+  const start = document.getElementById("start");
+  const newG = document.getElementById("new");
+
+  console.log();
+
+  for (let l of lang) {
+    if (l.checked) cLang = l.value;
+  }
+
+  if (cLang === "en") {
+    rSummary.innerText = "Round Summary:";
+    info.innerText = "Instructions";
+    instructions.innerHTML =
+      "<p><span>Choose the color mode:</span> <ul><li>random (aleatory colors) or</li><li>monochromatic(similar colors);</li></ul></p><p><span>Choose the difficulty:</span> <ul><li>easy (6 tiles),</li><li>medium (8 tiles),</li> <li>hard (12 tiles)...</li></ul></p> <p>And finally <span>start a game</span> and find, among the tiles on the board, the color that matches the main one! Things migth get a bit... <span>extreme</span>, if you get enough points</p></p>";
+    next.innerText = "Next Round";
+    reset.innerText = "Reset Game";
+    mode.innerText = "Color Mode";
+    diff.innerText = "Choose Difficulty";
+    random.innerText = "Random";
+    mono.innerText = "Monochromatic";
+    easy.innerText = "Easy";
+    medium.innerText = "Medium";
+    hard.innerText = "Hard";
+    xtrm.innerText = "Extreme";
+    start.innerText = "Start Game";
+    newG.innerText = "New Game";
+  } else {
+    rSummary.innerText = "Resumo do Round:";
+    info.innerText = "Instruções";
+    instructions.innerHTML =
+      "<p><span>Escolha o modo:</span> <ul><li>random (cores aleatórias) ou</li><li>monocromático(cores parecidas);</li></ul></p><p><span>Escolha a dificuldade:</span><ul><li>fácil (6 cores),</li><li>médio (8 cores),</li><li>difícil (12 cores)...</li></ul></p><p>E finalmente <span>inicie um jogo</span> e encontre entre as cores na tela a cor igual a cor principal! As coisas podem ficar... <span>extremas</span>, se você conseguir pontos suficientes.</p></p>";
+    next.innerText = "Próximo Round";
+    reset.innerText = "Zerar Partida";
+    mode.innerText = "Escolha o Modo";
+    diff.innerText = "Escolha a Dificuldade";
+    random.innerText = "Random";
+    mono.innerText = "Monocromático";
+    easy.innerText = "Fácil";
+    medium.innerText = "Médio";
+    hard.innerText = "Difícil";
+    xtrm.innerText = "Extremo";
+    start.innerText = "Começar Partida";
+    newG.innerText = "Nova Partida";
+  }
+}
 
 //// Instructions
 function showInfo() {
@@ -103,12 +172,22 @@ function updatePoints(bool) {
       break;
   }
 
-  if (currentPoints === 0) points.innerHTML = `000 <strong>Points</strong>`;
-  else if (currentPoints < 10)
-    points.innerHTML = `00${currentPoints} <strong>Points</strong>`;
-  else if (currentPoints < 100)
-    points.innerHTML = `0${currentPoints} <strong>Points</strong>`;
-  else points.innerHTML = `${currentPoints} <strong>Points</strong>`;
+  if (currentPoints === 0) {
+    if (cLang === "en") points.innerHTML = `000 <strong>Points</strong>`;
+    else points.innerHTML = `000 <strong>Pont0s</strong>`;
+  } else if (currentPoints < 10) {
+    if (cLang === "en")
+      points.innerHTML = `00${currentPoints} <strong>Points</strong>`;
+    else points.innerHTML = `00${currentPoints} <strong>Pontos</strong>`;
+  } else if (currentPoints < 100) {
+    if (cLang === "en")
+      points.innerHTML = `0${currentPoints} <strong>Points</strong>`;
+    else points.innerHTML = `0${currentPoints} <strong>Pontos</strong>`;
+  } else {
+    if (cLang === "en")
+      points.innerHTML = `${currentPoints} <strong>Points</strong>`;
+    else points.innerHTML = `${currentPoints} <strong>Pontos</strong>`;
+  }
 }
 
 /// Rounds
@@ -132,7 +211,9 @@ function roundSummary() {
   const cp = points.innerHTML;
   let tPoints = +cp.slice(0, 3);
   const thisRound = new Round(cr, tPoints, pointsWon, pointsLost, eTime);
-  const summary = thisRound.summary;
+  let summary;
+  if (cLang === "en") summary = thisRound.summary;
+  else summary = thisRound.resumo;
 
   console.log(thisRound);
 
